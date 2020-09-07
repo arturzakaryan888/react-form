@@ -53,7 +53,7 @@ class App extends React.Component {
 
         if (!this.state.token) {
             loggedOut = <form onSubmit={this.handleSubmit} className='form'>
-                {errorMessage}
+
                 <label>
                     Username:
                     <input type="text" value={this.state.username} onChange={this.handleUsernameChange} />
@@ -62,7 +62,7 @@ class App extends React.Component {
                     Password:
                     <input type="password" value={this.state.password} onChange={this.handlePasswordChange} />
                 </label>
-
+                {errorMessage}
                 <button type="submit">Войти</button>
             </form>
         } else {
