@@ -5,7 +5,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {username: '',password: '',error: '',token: localStorage.getItem('admin_authourized_token')};
+        this.state = { username: '', password: '', error: '', token: localStorage.getItem('admin_authourized_token') };
 
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -14,39 +14,46 @@ class App extends React.Component {
 
     }
     handleLogout(event) {
-        if(localStorage.getItem('admin_authourized_token')){
+        if (localStorage.getItem('admin_authourized_token')) {
             localStorage.removeItem('admin_authourized_token')
-            this.setState({token: false})
-            this.setState({username: ""});
-            this.setState({password: ""});
+            this.setState({ token: false })
+            this.setState({ username: "" });
+            this.setState({ password: "" });
+            this.setState({ error: '' })
         }
     }
 
     handleUsernameChange(event) {
-        this.setState({username: event.target.value});
+        this.setState({ username: event.target.value });
     }
     handlePasswordChange(event) {
-        this.setState({password: event.target.value});
+        this.setState({ password: event.target.value });
     }
     handleSubmit(event) {
-        if(this.state.username === 'admin' && this.state.password === 'password'){
-            localStorage.setItem('admin_authourized_token','token')
-            this.setState({token: localStorage.getItem('groupmarks_token')});
-        }else{
-            this.setState({error: 'Username or password is incorrect'});
+
+        if (this.state.username === 'admin' && this.state.password === 'password') {
+            localStorage.setItem('admin_authourized_token', 'token')
+            this.setState({ token: 'token' });
+        } else {
+            this.setState({ error: 'Username or password is incorrect' });
+            this.setState({ token: false })
+            this.setState({ username: "" });
+            this.setState({ password: "" });
         }
+        event.preventDefault();
     }
 
     render() {
-        const error = this.state.error;
+
         let errorMessage;
         let loggedOut;
-        if (error) {
-            errorMessage = <div className="error">{error}</div>;
+        if (this.state.error) {
+            errorMessage = <div className="error">{this.state.error}</div>;
         }
 
-        if(!this.state.token){
+        if (!this.state.token) {
             loggedOut = <form onSubmit={this.handleSubmit} className='form'>
+                {errorMessage}
                 <label>
                     Username:
                     <input type="text" value={this.state.username} onChange={this.handleUsernameChange} />
@@ -58,13 +65,13 @@ class App extends React.Component {
 
                 <button type="submit">Войти</button>
             </form>
-        }else{
+        } else {
             loggedOut = <button type="button" onClick={this.handleLogout}>Выйти</button>
         }
 
         return (
             <div className="form-container">
-                {errorMessage}
+
                 {loggedOut}
             </div>
         );
