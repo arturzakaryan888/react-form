@@ -1,37 +1,32 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Login from "./views/Login/Login";
-import "./App.css";
-import Button from "./components/Button/Button";
 function App() {
-    const [user,setUser] = useState(false || localStorage.getItem("admin_authorized_token"));
+    const [user, setUser] = useState(false);
     useEffect(() => {
-        if(user){
-            localStorage.setItem("admin_authorized_token",'token')
+        if (user) {
+
             loggedInUser();
         }
-    },[user])
+    }, [user])
     let logout = () => {
-        if(localStorage.getItem("admin_authorized_token")){
-            localStorage.removeItem("admin_authorized_token")
-            setUser(false)
-        }
+        setUser(false)
     }
     let loggedInUser = () => {
-        if(user){
+        if (user) {
             return (
                 <div>
-                    <Button onClick={logout}  type="button"  text="Выйти"/>
+                    <button type="button" className={"btn"} onClick={logout}>Выйти</button>
                 </div>
 
             );
-        }else{
-            return <Login setUser={setUser}/>
+        } else {
+            return <Login setUser={setUser} />
         }
     }
     return (
-            <div className="main-container">
-                {loggedInUser()}
-            </div>
+        <div className="main-container">
+            {loggedInUser()}
+        </div>
     );
 }
 

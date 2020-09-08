@@ -1,18 +1,24 @@
 import React from "react";
 import "./login-form.css";
-import Input from "../Input/Input";
-import Button from "../Button/Button";
-
 function LoginForm(props) {
- 
+  let handlePasswordChange = (e) => {
+    props.setPassword(e.target.value)
+  }
+  let handleUsernameChange = (e) => {
+    props.setUsername(e.target.value)
+  }
   return (
     <form className="login-form" onSubmit={props.onSubmit}>
-
-      
-      <Input label="Username"  setForm={props.setUsername} error={props.error}/>
-      <Input type="password" label="Password" setForm={props.setPassword} error={props.error}/>
-        <div className="error">{props.error ? props.error : ""}</div>
-      <Button type="submit" class="primary" text="Войти" />
+      <div className="input-container">
+        <label className="label">Username</label>
+        <input className="input" type="text" onChange={(e) => handleUsernameChange(e)} />
+      </div>
+      <div className="input-container">
+        <label className="label">Password</label>
+        <input className="input" type="password" onChange={(e) => handlePasswordChange(e)} />
+      </div>
+      <div className="error">{props.error ? props.error : ""}</div>
+      <button type="submit" className={"btn"}>Войти</button>
     </form>
   );
 }
